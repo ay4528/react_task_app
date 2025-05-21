@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './reset.css';
 import './style.css';
 import { Task } from './types/type';
@@ -7,7 +7,14 @@ import { TaskList } from './components/TaskList';
 import { Sidebar } from './components/Sidebar';
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const savedTasks = localStorage.getItem('tasks');
+    return JSON.parse(savedTasks ?? '[]');
+  });
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (task: Task) => {
     setTasks((prev) => [...prev, task]);
@@ -19,7 +26,7 @@ function App() {
     setTasks(updated);
   };
 
-  const completedCount = tasks.filter(t => t.completed).length;
+  const completedCount = tasks.filter((t) => t.completed).length;
   const incompletedCount = tasks.length - completedCount;
 
   return (
@@ -35,7 +42,10 @@ function App() {
                 <TaskForm onAdd={addTask} />
                 <TaskList tasks={tasks} onStatusChange={updateTaskStatus} />
               </div>
-              <Sidebar completed={completedCount} incompleted={incompletedCount}/>
+              <Sidebar
+                completed={completedCount}
+                incompleted={incompletedCount}
+              />
             </div>
           </div>
         </div>
