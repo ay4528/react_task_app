@@ -12,9 +12,11 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
         <table className="table m-0" style={{ minWidth: '650px' }}>
           <thead>
             <tr>
-              <th className="w-25">タイトル</th>
-              <th>説明</th>
-              <th className="w-25">状態</th>
+              <th className="text-nowrap w-25">タイトル</th>
+              <th className="text-nowrap">説明</th>
+              <th className="text-nowrap">カテゴリー</th>
+              <th className="text-nowrap">期限</th>
+              <th className="text-nowrap">状態</th>
             </tr>
           </thead>
           <tbody>
@@ -22,9 +24,11 @@ export function TaskList({ tasks, onStatusChange }: TaskListProps) {
               const selectClass = task.completed ? 'complete' : 'incomplete';
               return (
                 <tr key={index}>
-                  <td>{task.title}</td>
-                  <td>{task.description}</td>
-                  <td>
+                  <td className="align-middle">{task.title}</td>
+                  <td className="align-middle">{task.description}</td>
+                  <td className="align-middle">{task.category}</td>
+                  <td className="text-nowrap align-middle">{task.dueDate}</td>
+                  <td className="align-middle">
                     <select
                       className={`form-select w-auto ${selectClass}`}
                       value={task.completed ? '完了' : '未完了'}

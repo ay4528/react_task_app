@@ -8,17 +8,24 @@ type addTaskProps = {
 export function TaskForm({ onAdd }: addTaskProps) {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [dueDate, setDueDate] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-    onAdd({ title, description, completed: false });
+    e.preventDefault();
+    onAdd({ title, description, completed: false, dueDate, category });
     setTitle('');
     setDescription('');
+    setDueDate('');
+    setCategory('');
   };
 
   return (
     <div className="form_box mb-4">
-      <form className="form bg-body-secondary bg-opacity-50 p-4" onSubmit={handleSubmit}>
+      <form
+        className="form bg-body-secondary bg-opacity-50 p-4"
+        onSubmit={handleSubmit}
+      >
         <div className="item mb-4">
           <p className="head fs-6 fw-bold mb-2">タイトル</p>
           <input
@@ -39,11 +46,27 @@ export function TaskForm({ onAdd }: addTaskProps) {
             required
           ></textarea>
         </div>
+        <div className="d-flex align-item-center gap-3 mb-4">
+          <div className="inbox">
+            <p className="head fs-6 fw-bold mb-2">期限</p>
+            <input
+              type="date"
+              value={dueDate}
+              className="form-control"
+              onChange={(e) => setDueDate(e.target.value)}
+            />
+          </div>
+          <div className="inbox">
+            <p className="head fs-6 fw-bold mb-2">カテゴリー</p>
+            <select className="form-select w-auto" value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="仕事">仕事</option>
+              <option value="趣味">趣味</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+        </div>
         <div className="submit">
-          <button
-            type="submit"
-            className="btn btn-primary"
-          >
+          <button type="submit" className="btn btn-primary">
             追加する
           </button>
         </div>
