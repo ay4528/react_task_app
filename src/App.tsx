@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import './reset.css';
-import './style.css';
+import './css/reset.css';
+import './css/style.css';
 import { Task } from './types/type';
 import { TaskForm } from './components/TaskForm';
 import { TaskList } from './components/TaskList';
